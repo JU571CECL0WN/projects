@@ -1,0 +1,12 @@
+arsenal = {'equipment':{'1': {'price': 75, 
+                              'defence': 5},
+                        '2': {'price': 50, 
+                              'HP': 10},
+                        '3': {'price': 75, 
+                              'strenght': 5},
+                        '4': {'price': 750, 
+                              'defence': 55},
+                        '5': {'price': 500, 
+                              'HP': 110},
+                        '6': {'price': 750, 
+                              'strenght': 55}}}

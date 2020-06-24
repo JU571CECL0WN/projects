@@ -1,0 +1,2 @@
+20,nanu,hard
+30,nanu,easy
