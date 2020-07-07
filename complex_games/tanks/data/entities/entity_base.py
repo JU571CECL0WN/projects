@@ -6,7 +6,7 @@ class EntityBase(pygame.sprite.Sprite):
 		super().__init__()
 		self.speed = speed
 
-		self.image = pygame.image.load('C:\\Users\\Usuario\\Desktop\\Personal\\Python\\Finished\\complex_games\\tanks\\data\\static\\{}'.format(filename)).convert_alpha()
+		self.image = pygame.image.load('C:\\Users\\Usuario\\Desktop\\Personal\\Python\\projects\\complex_games\\tanks\\data\\static\\{}'.format(filename)).convert_alpha()
 		self.mask = pygame.mask.from_surface(self.image)
 		self.rect = self.image.get_rect(center=init_position)
 
