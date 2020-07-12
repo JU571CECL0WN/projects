@@ -54,10 +54,8 @@ class GameManager:
 					where = entity.move_to_kill(self.player.get_position())
 					if where:
 						entity.move(where[0], where[1])
-					if not where:
-						self.all_entities.remove(entity)
-					#if utils.check_range(self.player.get_position(), entity.get_position(), self.player.range):                   
-						#bullet = Bullet(entity, self.player)
+					if utils.check_range(self.player.get_position(), entity.get_position(), self.player.range):                   
+						bullet = Bullet(entity, self.player)
 
 
 			#screen.blit(something)
