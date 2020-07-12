@@ -23,8 +23,6 @@ class GameManager:
 		self.all_entities = pygame.sprite.Group(self.player) # sprite group # self.all_entities.add(@sprite)
 
 	def play(self):
-		enemy = Enemy()
-		self.all_entities.add(enemy)
 		while self.running:
 			self.screen.fill(config.COLORS['white'])
 
@@ -43,8 +41,8 @@ class GameManager:
 				self.player.move_down()
 
 
-			if len(self.all_entities) < 50:
-				if random.random() < 0.5:
+			if len(self.all_entities) < 25:
+				if random.random() > 0.99:
 					enemy = Enemy()
 					self.all_entities.add(enemy)
 			
@@ -56,6 +54,7 @@ class GameManager:
 						entity.move(where[0], where[1])
 					if utils.check_range(self.player.get_position(), entity.get_position(), self.player.range):                   
 						bullet = Bullet(entity, self.player)
+						self.all_entities.add(bullet)
 
 
 			#screen.blit(something)

@@ -9,15 +9,13 @@ class Bullet(EntityBase):
 		self.filename = 'bullet.png'
 		self.image_frame = None
 		self.speed = 10
-		self.destination = self.destination(enemy.get_position())
 		super().__init__(self.filename, self.init_position, self.speed)
 
 
 	def move_to_kill(self, enemy_position):
-		if destination(enemy_position):
-			return (destination[0], destination[1])
-		elif not destination:
-			return False
+		destination = self.destination(enemy_position)
+		if destination:
+			self.move(destination[0], destination[1])
 
 
 	def destination(self, enemy_position):
