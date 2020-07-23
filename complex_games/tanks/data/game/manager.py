@@ -52,9 +52,10 @@ class GameManager:
 					where = entity.move_to_kill(self.player.get_position())
 					if where:
 						entity.move(where[0], where[1])
-					if utils.check_range(self.player.get_position(), entity.get_position(), self.player.range):                   
-						bullet = Bullet(entity, self.player)
-						self.all_entities.add(bullet)
+					if entity.filename == 'enemy.png' and utils.check_range(self.player.get_position(), entity.get_position(), self.player.range):
+						if entity.shoot():
+							bullet = Bullet(entity, self.player)
+							self.all_entities.add(bullet)
 
 
 			#screen.blit(something)
