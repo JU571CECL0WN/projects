@@ -9,7 +9,10 @@ class Player(EntityBase):
 		self.init_speed = 7
 		super().__init__(self.filename, self.init_position, self.init_speed)
 		self.limit_x, self.limit_y = self.image_size()
-		self.range = 180
+		self.range = 250
+		self.atk_speed = 1.4
+		self.atk_cool_down = 0
+		self.atk_is_ready = True
 		
 
 	def image_size(self):
@@ -33,11 +36,15 @@ class Player(EntityBase):
 		if self.rect.center[1] < config.SCREEN_SIZE[1] - self.limit_y:
 			self.move(0, +self.speed)
 
-	def check_enemy(self): # TODO
-		# check enemy are or not in area
-		# if enemy in area
-			#self.shoot(x, y)
-			pass
 
-	def shoot(self, x, y):
-		pass # movement of the bullet to the specific pixel, class bullet: speed and ui
+	def shoot(self):
+		if self.atk_is_ready:
+			self.atk_is_ready = False
+			self.atk_cool_down += 1 / self.atk_speed
+			return True
+		else:
+			self.atk_cool_down -= 0.01
+			if self.atk_cool_down <= 0:
+				self.atk_cool_down = 0
+				self.atk_is_ready = True
+				return False

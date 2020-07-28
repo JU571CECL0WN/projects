@@ -23,6 +23,8 @@ class GameManager:
 		self.all_entities = pygame.sprite.Group(self.player) # sprite group # self.all_entities.add(@sprite)
 
 	def play(self):
+		enemy = Enemy()
+		self.all_entities.add(enemy)
 		while self.running:
 			self.screen.fill(config.COLORS['white'])
 
@@ -40,7 +42,6 @@ class GameManager:
 			if key_state[pygame.K_DOWN]:
 				self.player.move_down()
 
-
 			if len(self.all_entities) < 25:
 				if random.random() > 0.99:
 					enemy = Enemy()
@@ -48,14 +49,18 @@ class GameManager:
 			
 
 			for entity in self.all_entities:
-				if entity != self.player:
-					where = entity.move_to_kill(self.player.get_position())
-					if where:
-						entity.move(where[0], where[1])
-					if entity.filename == 'enemy.png' and utils.check_range(self.player.get_position(), entity.get_position(), self.player.range):
-						if entity.shoot():
-							bullet = Bullet(entity, self.player)
-							self.all_entities.add(bullet)
+				if entity.filename == 'bullet.png':
+					entity.flying()
+				if entity.filename == 'enemy.png':
+					entity.move_to_kill(self.player.get_position())
+					if entity.shoot() and utils.check_range(entity.get_position(), self.player.get_position(), entity.range):
+						bullet = Bullet(entity, self.player)
+						self.all_entities.add(bullet)
+					if key_state[pygame.K_SPACE]:
+						if utils.check_range(self.player.get_position(), entity.get_position(), self.player.range):
+							if self.player.shoot():
+								bullet = Bullet(self.player, entity)
+								self.all_entities.add(bullet)
 
 
 			#screen.blit(something)

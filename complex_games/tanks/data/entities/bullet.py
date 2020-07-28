@@ -5,28 +5,18 @@ import math
 class Bullet(EntityBase):
 	def __init__(self, owner, enemy):
 		self.owner = owner
-		self.init_position = owner.get_position()
+		self.x, self.y = owner.get_position()
 		self.filename = 'bullet.png'
 		self.image_frame = None
 		self.speed = 10
-		super().__init__(self.filename, self.init_position, self.speed)
+		self.enemy_x, self.enemy_y = enemy.get_position()
+		self.destination = math.sqrt(((self.enemy_x - self.x) ** 2) + ((self.enemy_y - self.y) ** 2))
+		super().__init__(self.filename, (self.x, self.y), self.speed)
 
 
-	def move_to_kill(self, enemy_position):
-		destination = self.destination(enemy_position)
+	def flying(self):
+		n = self.destination / self.speed
+		destination = ((self.enemy_x - self.x) / n,  (self.enemy_y - self.y) / n)
 		if destination:
 			self.move(destination[0], destination[1])
-
-
-	def destination(self, enemy_position):
-		enemy_x, enemy_y = enemy_position
-		x, y = self.init_position
-		distance = math.sqrt(((enemy_x - x) ** 2) + ((enemy_y - y) ** 2))
-		if distance == 0:
-			return False 
-		n = distance / self.speed
-		return ((enemy_x - x) / n,  (enemy_y - y) / n)
-
-
-
 

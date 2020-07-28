@@ -8,10 +8,11 @@ class Enemy(EntityBase):
 	def __init__(self):
 		self.init_position = self.get_init()
 		self.filename = 'enemy.png'
-		self.init_speed = 5 
-		self.atk_speed = 0.75
-		self.atk_is_ready = False
+		self.init_speed = 5
+		self.atk_speed = 1
+		self.atk_is_ready = True
 		self.atk_cool_down = 0
+		self.range = 180
 		super().__init__(self.filename, self.init_position, self.init_speed)
 
 	def move_to_kill(self, player_position):
@@ -35,11 +36,11 @@ class Enemy(EntityBase):
 			self.atk_cool_down += 1 / self.atk_speed
 			return True
 		else:
-			self.atk_cool_down -= 0.001
+			self.atk_cool_down -= 0.01
 			if self.atk_cool_down <= 0:
 				self.atk_cool_down = 0
 				self.atk_is_ready = True
-		
+				return False
 
 	def get_init(self):
 		list_ = [random.choice([0, config.SCREEN_SIZE[1]]), random.randint(0, config.SCREEN_SIZE[0])]
