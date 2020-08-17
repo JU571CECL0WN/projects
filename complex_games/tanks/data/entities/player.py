@@ -8,6 +8,7 @@ class Player(EntityBase):
 		self.filename = 'player.png'
 		self.init_speed = 7
 		super().__init__(self.filename, self.init_position, self.init_speed)
+		self.possible_enemies = ['enemy.png', 'bullet.png']
 		self.limit_x, self.limit_y = self.image_size()
 		self.range = 250
 		self.atk_speed = 1.4

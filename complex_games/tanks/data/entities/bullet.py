@@ -2,6 +2,7 @@ from data.entities.entity_base import EntityBase
 import math
 
 
+
 class Bullet(EntityBase):
 	def __init__(self, owner, enemy):
 		self.owner = owner
@@ -15,8 +16,18 @@ class Bullet(EntityBase):
 
 
 	def flying(self):
-		n = self.destination / self.speed
-		destination = ((self.enemy_x - self.x) / n,  (self.enemy_y - self.y) / n)
-		if destination:
-			self.move(destination[0], destination[1])
+		try:
+			n = self.destination / self.speed
+			destination = ((self.enemy_x - self.x) / n,  (self.enemy_y - self.y) / n)
+			if destination:
+				self.move(destination[0], destination[1])
+		except ZeroDivisionError:
+			pass
+
+	def check_die(self, screen_size):
+		position = self.get_position()
+		print(position, screen_size)
+		if 0 > position[0] or 0 > position[1] or screen_size[0] < position[0] or screen_size[1] < position[1]:
+			self.alive = False
+
 

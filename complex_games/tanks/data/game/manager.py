@@ -51,6 +51,8 @@ class GameManager:
 			for entity in self.all_entities:
 				if entity.filename == 'bullet.png':
 					entity.flying()
+					entity.check_die(config.SCREEN_SIZE)
+					
 				if entity.filename == 'enemy.png':
 					entity.move_to_kill(self.player.get_position())
 					if entity.shoot() and utils.check_range(entity.get_position(), self.player.get_position(), entity.range):
@@ -61,10 +63,13 @@ class GameManager:
 							if self.player.shoot():
 								bullet = Bullet(self.player, entity)
 								self.all_entities.add(bullet)
+								
+				if entity.alive == False:
+					self.all_entities.remove(entity)
 
 
 			#screen.blit(something)
-			self.all_entities.draw(self.screen)
+			self.all_entities.draw(self.screen) 
 			pygame.display.update()
 			self.fpsclock.tick(self.FPS)
 		pygame.quit()

@@ -5,6 +5,7 @@ class EntityBase(pygame.sprite.Sprite):
 	def __init__(self, filename, init_position, speed):
 		super().__init__()
 		self.speed = speed
+		self.alive = True
 
 		self.image = pygame.image.load('C:\\Users\\Usuario\\Desktop\\Personal\\Python\\projects\\complex_games\\tanks\\data\\static\\{}'.format(filename)).convert_alpha()
 		self.mask = pygame.mask.from_surface(self.image)
@@ -16,8 +17,9 @@ class EntityBase(pygame.sprite.Sprite):
 	def draw_range(self):
 		pygame.draw.circle(screen, color, self.rect.center, self.range)
 
-	def entity_collision(self):
-		pass # collition of entities 
+
+	def die(self):
+		self.alive = False
 
 	def get_position(self):
 		return self.rect.center
