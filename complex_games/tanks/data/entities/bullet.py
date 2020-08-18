@@ -26,7 +26,6 @@ class Bullet(EntityBase):
 
 	def check_die(self, screen_size):
 		position = self.get_position()
-		print(position, screen_size)
 		if 0 > position[0] or 0 > position[1] or screen_size[0] < position[0] or screen_size[1] < position[1]:
 			self.alive = False
 

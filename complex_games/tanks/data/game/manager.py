@@ -13,7 +13,10 @@ class GameManager:
 		self.max_entities = 100
 		self.screen_size = config.SCREEN_SIZE
 		self.screen = pygame.display.set_mode(self.screen_size)
-		self.running = True
+		self.font = pygame.font.SysFont('Arial', 30)	
+		self.font2 = pygame.font.SysFont('Arial', 60)
+
+
 
 		self.FPS = 30
 		self.fpsclock = pygame.time.Clock()
@@ -25,7 +28,7 @@ class GameManager:
 	def play(self):
 		enemy = Enemy()
 		self.all_entities.add(enemy)
-		while self.running:
+		while self.player.alive:
 			self.screen.fill(config.COLORS['white'])
 
 			for event in pygame.event.get():
@@ -52,12 +55,22 @@ class GameManager:
 				if entity.filename == 'bullet.png':
 					entity.flying()
 					entity.check_die(config.SCREEN_SIZE)
-					
+					if entity.owner == enemy and pygame.sprite.collide_mask(entity, self.player):
+						self.player.alive = False
+						pygame.time.wait(750)
+						self.all_entities.empty()
+						text = self.font2.render('YOU LOSE', True, config.COLORS['pink'])
+						self.screen.blit(text, (config.SCREEN_SIZE[0]/2, config.SCREEN_SIZE[1]/2))
+						break
+
+					if entity.owner == self.player and pygame.sprite.collide_mask(entity, enemy):
+						pass
 				if entity.filename == 'enemy.png':
 					entity.move_to_kill(self.player.get_position())
 					if entity.shoot() and utils.check_range(entity.get_position(), self.player.get_position(), entity.range):
 						bullet = Bullet(entity, self.player)
 						self.all_entities.add(bullet)
+
 					if key_state[pygame.K_SPACE]:
 						if utils.check_range(self.player.get_position(), entity.get_position(), self.player.range):
 							if self.player.shoot():
@@ -67,10 +80,13 @@ class GameManager:
 				if entity.alive == False:
 					self.all_entities.remove(entity)
 
-
-			#screen.blit(something)
 			self.all_entities.draw(self.screen) 
 			pygame.display.update()
 			self.fpsclock.tick(self.FPS)
+
+		text = self.font2.render('YOU LOSE', True, config.COLORS['pink'])
+		self.screen.blit(text, (config.SCREEN_SIZE[0]/3, config.SCREEN_SIZE[1]/3))
+		pygame.time.wait(2500)
+
 		pygame.quit()
 
