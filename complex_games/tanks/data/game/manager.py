@@ -24,10 +24,10 @@ class GameManager:
 
 		self.player = Player()
 		self.all_entities = pygame.sprite.Group(self.player) # sprite group # self.all_entities.add(@sprite)
+		self.max_entities = 5
+		self.points = 0
 
 	def play(self):
-		enemy = Enemy()
-		self.all_entities.add(enemy)
 		while self.player.alive:
 			self.screen.fill(config.COLORS['white'])
 
@@ -51,20 +51,23 @@ class GameManager:
 					self.all_entities.add(enemy)
 			
 
-			for entity in self.all_entities:
+			for entity in self.all_entities:	
 				if entity.filename == 'bullet.png':
 					entity.flying()
 					entity.check_die(config.SCREEN_SIZE)
-					if entity.owner == enemy and pygame.sprite.collide_mask(entity, self.player):
+					if entity.owner != self.player and pygame.sprite.collide_mask(entity, self.player):
 						self.player.alive = False
 						pygame.time.wait(750)
 						self.all_entities.empty()
 						text = self.font2.render('YOU LOSE', True, config.COLORS['pink'])
 						self.screen.blit(text, (config.SCREEN_SIZE[0]/2, config.SCREEN_SIZE[1]/2))
 						break
+					for enemy in self.all_entities:
+						if entity.owner == self.player and pygame.sprite.collide_mask(entity, enemy) and enemy.filename == 'enemy.png':
+							enemy.alive = False
+							self.points += 1
+							entity.alive = False
 
-					if entity.owner == self.player and pygame.sprite.collide_mask(entity, enemy):
-						pass
 				if entity.filename == 'enemy.png':
 					entity.move_to_kill(self.player.get_position())
 					if entity.shoot() and utils.check_range(entity.get_position(), self.player.get_position(), entity.range):
@@ -79,6 +82,8 @@ class GameManager:
 								
 				if entity.alive == False:
 					self.all_entities.remove(entity)
+			text = self.font2.render('SCORE: {}'.format(self.points), True, config.COLORS['pink'])
+			self.screen.blit(text, (10, 10))
 
 			self.all_entities.draw(self.screen) 
 			pygame.display.update()

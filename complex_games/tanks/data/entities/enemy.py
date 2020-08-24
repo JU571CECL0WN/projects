@@ -12,7 +12,7 @@ class Enemy(EntityBase):
 		self.atk_speed = 1
 		self.atk_is_ready = True
 		self.atk_cool_down = 0
-		self.range = 180
+		self.range = 210
 		super().__init__(self.filename, self.init_position, self.init_speed)
 
 	def move_to_kill(self, player_position):

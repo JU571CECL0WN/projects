@@ -4,14 +4,14 @@ from data import utils
 
 class Player(EntityBase):
 	def __init__(self):
-		self.init_position = (100, 100)
+		self.init_position = (290, 290)
 		self.filename = 'player.png'
 		self.init_speed = 7
 		super().__init__(self.filename, self.init_position, self.init_speed)
 		self.possible_enemies = ['enemy.png', 'bullet.png']
 		self.limit_x, self.limit_y = self.image_size()
-		self.range = 250
-		self.atk_speed = 1.4
+		self.range = 300
+		self.atk_speed = 2
 		self.atk_cool_down = 0
 		self.atk_is_ready = True
 		
