@@ -46,7 +46,7 @@ class GameManager:
 				self.player.move_down()
 
 			if len(self.all_entities) < 25:
-				if random.random() > 0.99:
+				if random.random() > 1 - (self.points + 1 * 0.001):
 					enemy = Enemy()
 					self.all_entities.add(enemy)
 			
@@ -82,8 +82,8 @@ class GameManager:
 								
 				if entity.alive == False:
 					self.all_entities.remove(entity)
-			text = self.font2.render('SCORE: {}'.format(self.points), True, config.COLORS['pink'])
-			self.screen.blit(text, (10, 10))
+			text = self.font.render('SCORE: {}'.format(self.points), True, config.COLORS['pink'])
+			self.screen.blit(text, (10, 1))
 
 			self.all_entities.draw(self.screen) 
 			pygame.display.update()
