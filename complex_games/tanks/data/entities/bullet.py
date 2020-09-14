@@ -2,7 +2,6 @@ from data.entities.entity_base import EntityBase
 import math
 
 
-
 class Bullet(EntityBase):
 	def __init__(self, owner, enemy):
 		self.owner = owner
@@ -13,7 +12,6 @@ class Bullet(EntityBase):
 		self.enemy_x, self.enemy_y = enemy.get_position()
 		self.destination = math.sqrt(((self.enemy_x - self.x) ** 2) + ((self.enemy_y - self.y) ** 2))
 		super().__init__(self.filename, (self.x, self.y), self.speed)
-
 
 	def flying(self):
 		try:
@@ -28,5 +26,3 @@ class Bullet(EntityBase):
 		position = self.get_position()
 		if 0 > position[0] or 0 > position[1] or screen_size[0] < position[0] or screen_size[1] < position[1]:
 			self.alive = False
-
-

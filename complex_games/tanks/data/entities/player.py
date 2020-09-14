@@ -1,6 +1,6 @@
 from data.entities.entity_base import EntityBase
 from data import config
-from data import utils
+
 
 class Player(EntityBase):
 	def __init__(self):
@@ -14,7 +14,6 @@ class Player(EntityBase):
 		self.atk_speed = 2
 		self.atk_cool_down = 0
 		self.atk_is_ready = True
-		
 
 	def image_size(self):
 		x = self.image.get_width()
@@ -36,7 +35,6 @@ class Player(EntityBase):
 	def move_down(self):
 		if self.rect.center[1] < config.SCREEN_SIZE[1] - self.limit_y:
 			self.move(0, +self.speed)
-
 
 	def shoot(self):
 		if self.atk_is_ready:

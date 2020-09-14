@@ -16,7 +16,6 @@ class Enemy(EntityBase):
 		super().__init__(self.filename, self.init_position, self.init_speed)
 
 	def move_to_kill(self, player_position):
-		x, y = self.get_position()
 		destination = self.destination(player_position)
 		if destination:
 			self.move(destination[0], destination[1])
@@ -28,7 +27,7 @@ class Enemy(EntityBase):
 		if distance == 0:
 			return False
 		n = distance / self.init_speed
-		return ((player_x - x) / n,  (player_y - y) / n)
+		return (player_x - x) / n, (player_y - y) / n
 
 	def shoot(self):
 		if self.atk_is_ready:
